@@ -2,11 +2,11 @@
     <h1> Login Page </h1>
     <input type="button" id="Return" @click="Return()" value="Back">
 
-    <input type="button" id="Signin" @click="Login()" value="login">
+    <input type="button" id="Signin" @click="Login2()" value="login">
     <br> <br> <br>
-    <div id="Username"> Username:<input type="text"></div>
+    <div id="Username"> Username: <input type="text" ref="usernameinput"></div>
     <br>
-    <div id="password"> Password: <input type="text"></div>
+    <div id="Password"> Password: <input type="text" ref="passwordinput"></div>
     
 </template>
 
@@ -16,18 +16,37 @@ import { indexStore } from "../store/index.js";
 import { ref } from "vue";
 import router from '../router';
 
-let x = 3
+const usernameinput = ref("")
+const passwordinput = ref("")
 
 function Return() {
     router.push("/");
 }
 
-function Login() {
-    if (x === "tmdb") {
-        console.log(5)
+function Login2() {
+
+    if (passwordinput.value.value === "movies") {
+        passwordinput.value = "5"
     } else {
         router.push("/Popup");
     }
+
+    if (usernameinput.value.value === "tmdb") {
+        usernameinput.value = "5"
+    } else {
+        router.push("/Popup");
+    }
+
+    if (usernameinput.value === passwordinput.value) {
+        router.push("/Mainstore");
+    }
+    // if (usernameinput.value.value === "tmdb", passwordinput.value.value === "movies") {
+    //     console.log(5)
+    // } else {
+    //     router.push("/Popup");
+    // }
+
+   
 }
 
 </script>
