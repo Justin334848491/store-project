@@ -1,50 +1,35 @@
 <template>
-    <h1>The Movie Store</h1>
-        <input type="text">
+    <h1>The Endless Galaxy Movie Store</h1>
+    <input id="loginbutton" type="button" value="login" @click="login()">
     </template>
-        <!-- <p class="storyLine"> the </p>
-        <select id="classOptions" ref="classInput">
-            <option>Brute</option>
-            <option>Diseased</option>
-            <option>Thief</option>
-            <option>Fraud</option>
-            <option>Forgotten One</option>
-        </select>
-        <p class="storyLine"> has joined the hunt ...</p>
-        <br>
-        <br>
-        <input type="button" value="Submit your Ticket" @click="setUser()">
-    </div>
-</template> -->
+<script setup>
 
-<!-- <script setup>
 import { storeToRefs } from 'pinia';
 import { indexStore } from "../store/index.js";
 import { ref } from 'vue';
 import router from '../router';
 
-const nameInput = ref("");
-const classInput = ref("");
+    function login() {
+        router.push("./playerStats")
 
-const index = indexStore();
-
-const { username } = storeToRefs(index)
-
-function setUser() {
-    if (nameInput.value.value == null || nameInput.value.value == "") {
-
+  
+  
     }
-    else {
-        index.setUser(nameInput.value.value, classInput.value.value);
-        router.push("./playerStats");
-    } -->
-<!-- } -->
 
-<!-- </script> -->
+</script>
 
 <style>
 
 h1 {
     text-align: center;
 }
+
+#loginbutton{
+    position: relative;
+    width: 125px;
+    height: 25px;
+}
+
+
 </style>
+
