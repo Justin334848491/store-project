@@ -9,6 +9,9 @@ import { indexStore } from "../store/index.js";
 import { ref } from 'vue';
 import router from '../router';
 
+    const index = indexStore()
+
+   
     function login() {
         router.push("./playerStats")
 

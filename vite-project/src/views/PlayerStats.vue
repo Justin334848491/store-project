@@ -24,30 +24,15 @@ function Return() {
 }
 
 function Login2() {
-
-    if (passwordinput.value.value === "movies") {
-        passwordinput.value = "5"
-    } else {
+    if (usernameinput.value.value != "tmdb" && passwordinput.value.value != "movies") {
         router.push("/Popup");
-    }
-
-    if (usernameinput.value.value === "tmdb") {
-        usernameinput.value = "5"
     } else {
-        router.push("/Popup");
-    }
-
-    if (usernameinput.value === passwordinput.value) {
         router.push("/Mainstore");
     }
-    // if (usernameinput.value.value === "tmdb", passwordinput.value.value === "movies") {
-    //     console.log(5)
-    // } else {
-    //     router.push("/Popup");
-    // }
-
+    }
+    
    
-}
+
 
 </script>
 
