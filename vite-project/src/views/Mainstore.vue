@@ -4,13 +4,13 @@
 
 <input type="button" id="Signin" @click="Shoppingcart()" value="Shopping cart">
 
-<select class="moviestructer">
+<br> <br>
 
-<div>
-<img id="bird" src="data:image/jpeg;base64,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">
+<div class="objects">
+<img id="picture" @click="testFunction(option)" :id="option.id" v-for="option in Options" src="https://image.tmdb.org/t/p/w500/2l9LbxBSkJseoxYcIJjclnmxyq.jpg">
+
 </div>
 
-</select>
 
 </template>
 
@@ -22,6 +22,9 @@ import router from '../router';
 import axios from "axios";
 
 const index = indexStore()
+let idOptions = ref([])
+
+let Options = ref([])
 
 function Return3() {
     router.push("/");
@@ -39,22 +42,41 @@ let movies = axios.get(`https://api.themoviedb.org/3/trending/all/day?`, {
 })
 
 .then((movies) => {
-   console.log(movies.data.results)
+    for(let i = 0; i < movies.data.results.length; i++) {
+        Options.value.push({
+            text: movies.data.results[i].original_title,
+            id: movies.data.results[i].id,
+            posterimage: movies.data.results[i].poster_path
+        });
+    }
+    
 })
+
+function testFunction(message) {
+    console.log(message);
+
+}
 
 </script>
 
 <style>
 
-
-.moviestructer{
+.objects{
     display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
+    align-self: center;
+    grid-template-columns: 15vw 15vw 15vw 15vw 15vw;
+    grid-template-rows: 12vw 12vw 12vw 12vw;
+    column-gap: 5vw;
+    row-gap: 10vw;
+    width: 10vw;
+    height: 15vw;
+    position: relative;
+    left: 2vw;
 }
 
-#bird{
+#picture {
     width: 15vw;
-    height: 15vw;
+    height: 20vw;
 }
 
 </style>

@@ -1,6 +1,7 @@
 <template>
     <h1> Shoppingcart</h1>
 <input type="button" id="Return2" value="Back" @click="Return4()">
+
 </template>
 
 <script setup>
@@ -19,6 +20,7 @@ import router from '../router';
     function Return4() {
         router.push("/Mainstore");
     }
+    
 </script>
 
 <style>
