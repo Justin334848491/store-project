@@ -24,16 +24,15 @@ function Return() {
 }
 
 function Login2() {
-    if (usernameinput.value.value != "tmdb" && passwordinput.value.value != "movies") {
+    if (passwordinput.value.value != "movies" || usernameinput.value.value !="tmdb") {
         router.push("/Popup");
-    } else {
-        router.push("/Mainstore");
+    }
+    else {
+        router.push("./Mainstore");
     }
     }
+
     
-   
-
-
 </script>
 
 <style>

@@ -1,38 +1,18 @@
 <template>
-    <h1>The Endless Galaxy Movie Store</h1>
-    <input id="loginbutton" type="button" value="login" @click="login()">
-    </template>
+
+<MainMenuHeader/>
+<MainMenuHero/>
+<MainMenuFooter/>
+
+</template>
+
 <script setup>
-
-import { storeToRefs } from 'pinia';
-import { indexStore } from "../store/index.js";
-import { ref } from 'vue';
-import router from '../router';
-
-    const index = indexStore()
-
-   
-    function login() {
-        router.push("./playerStats")
-
-  
-  
-    }
-
+    import MainMenuHero from '../components/MainMenuHero.vue';
+    import MainMenuHeader from '../components/MainMenuHeader.vue';  
+    import MainMenuFooter from '../components/MainMenuFooter.vue';
 </script>
 
-<style>
-
-h1 {
-    text-align: center;
-}
-
-#loginbutton{
-    position: relative;
-    width: 125px;
-    height: 25px;
-}
-
+<style scoped>
 
 </style>
 

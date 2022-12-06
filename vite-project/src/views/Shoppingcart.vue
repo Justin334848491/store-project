@@ -21,6 +21,7 @@ import router from '../router';
         router.push("/Mainstore");
     }
     
+
 </script>
 
 <style>
