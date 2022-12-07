@@ -2,20 +2,25 @@
     <h1> Galaxy Movie Database </h1>
 <input type="button" id="Return" @click="Return3()" value="HomePage">
 
-<input type="button" id="Signin" @click="Shoppingcart()" value="Shopping cart">
+<input type="button" id="Signin" @click="Shoppingcart()" value="Shopping Cart">
 
 <br> <br>
 
 <div class="objects">
 
-<img id="picture" @click="testFunction(option)" :id="option.id" v-for="option in Options" :src="option.posterimage">
-<h1 v-for="option in Options"> {{ option.text }} </h1>
+<img id="picture" @click="testFunction(option.id)" :id="option.id" v-for="option in Options" :src="option.posterimage">
+
 
 <div id="myModal" class="modal">
     <div id="modalContent">
-    <h1 id="modalTitle"> {{ Options.text }} </h1>
-    <button id="closeButton" @click="close()"> Close </button>
+    <h1 id="modalTitle"> {{ title }} </h1>
+    <button id="shoppingcartButton" @click="Shoppingcart()"> Shopping Cart </button>
     <button id="addToCart" @click="addItems()"> Add To Cart</button>
+    <div id="summary"> {{ overview }} </div>
+    <br>
+    <img :src="poster" id="ModalImage" />
+    <p> Release Date: {{releasedate}} </p>
+    <p> Runtime: {{runtime}}</p>
     </div>
 
 </div>
@@ -36,6 +41,11 @@ let idOptions = ref([])
 
 let Options = ref([])
 
+let title = ref("")
+let releasedate = ref("")
+let poster = ref("")
+let runtime = ref("")
+let overview = ref("")
 
 function Return3() {
     router.push("/");
@@ -59,14 +69,41 @@ let movies = axios.get(`https://api.themoviedb.org/3/trending/all/day?`, {
             id: movies.data.results[i].id,
             posterimage: "https://image.tmdb.org/t/p/w500" + movies.data.results[i].poster_path
         });
-    }
+    } console.log(movies.data.results)
 })
 
-function testFunction(hi) {
-    myModal.style.display = "block"
-console.log(hi)
 
+
+function testFunction(id) {
+    myModal.style.display = "block"
+
+    let movies = axios.get(`https://api.themoviedb.org/3/movie/${id}`, {
+    params: {
+        api_key: "e06cb446302dcf3a3cb1358720141aad",
+        append_to_response: "videos",
+    },
+})
+
+    .then((movies) => {
+
+        title.value = movies.data.original_title
+        overview.value = movies.data.overview
+        poster.value = "https://image.tmdb.org/t/p/w500" + movies.data.poster_path
+        releasedate.value = movies.data.release_date
+        runtime.value = movies.data.runtime
+
+        
+        
+ });
 }
+
+// .then((movies) => {
+//     Modaltitle.value = movies.data.original_title
+//     console.log(movies.data)
+    
+// })
+
+
 
 function close() {
     myModal.style.display ="none"
@@ -109,18 +146,20 @@ window.onclick = function(event) {
   top: 0;
   width: 100%; 
   height: 100%;
-  overflow: auto; 
+  
   background-color: rgb(0,0,0); 
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
 #modalContent{
   opacity: 100%;
-  margin: 15% auto; /* 15% from the top and centered */
+  position: absolute;
+  left: 8.75vw;
+  top: 6.5vw;
   padding: 20px;
   border: 1px solid #888;
-  width: 50vw; /* Could be more or less, depending on screen size */
-  height: 20vw;
+  width: 80vw; /* Could be more or less, depending on screen size */
+  height: 40vw;
 }
 
 .close:hover,
@@ -134,5 +173,28 @@ window.onclick = function(event) {
     color: white;
 }
 
+#ModalImage {
+    width: 18vw;
+    height: 28vw;
+    position: absolute;
+    float: left;
+    left: 1vw;
+
+}
+
+#modalTitle {
+    font-size: 2vw;
+}
+
+p {
+    left: 20vw;
+    font-size: 1vw;
+}
+
+
+
+#summary {
+    font-size: 1.25vw;
+}
 
 </style>
