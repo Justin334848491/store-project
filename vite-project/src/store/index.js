@@ -1,20 +1,22 @@
 import { defineStore } from "pinia";
+import axios from "axios";
 
 export const indexStore = defineStore("main", {
   state: () => ({
     shoppingcart: [],
+    movies: [],
     startup: 0,
     testcount: 0,
   }),
   actions: {
-    addCount() {
-        this.testcount++;
-        console.log(this.testcount)
+    displayMovies(text, id, posterimage) {
+      this.movies.push({
+        text,
+        id,
+        posterimage,
+      });
     },
-    Login2() {
-        this.testcount
   },
-}});
-
+});
 // Methods can also be async
 // Learn getters - modify state variables without actually changing them

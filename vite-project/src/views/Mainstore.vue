@@ -1,30 +1,30 @@
 <template>
     <h1> Galaxy Movie Database </h1>
-<input type="button" id="Return" @click="Return3()" value="HomePage">
+    <input type="button" id="Return" @click="Return3()" value="HomePage">
 
-<input type="button" id="Signin" @click="Shoppingcart()" value="Shopping Cart">
+    <input type="button" id="Signin" @click="Shoppingcart()" value="Shopping Cart">
 
-<br> <br>
+    <br> <br>
 
-<div class="objects">
+    <div class="objects">
 
-<img id="picture" @click="testFunction(option.id)" :id="option.id" v-for="option in Options" :src="option.posterimage">
+        <img id="picture" @click="testFunction(option.text.id)" :id="option.text.id" v-for="option in Options" :src="option.text.posterimage">
 
 
-<div id="myModal" class="modal">
-    <div id="modalContent">
-    <h1 id="modalTitle"> {{ title }} </h1>
-    <button id="shoppingcartButton" @click="Shoppingcart()"> Shopping Cart </button>
-    <button id="addToCart" @click="addItems()"> Add To Cart</button>
-    <div id="summary"> {{ overview }} </div>
-    <br>
-    <img :src="poster" id="ModalImage" />
-    <p> Release Date: {{releasedate}} </p>
-    <p> Runtime: {{runtime}}</p>
+        <div id="myModal" class="modal">
+            <div id="modalContent">
+                <h1 id="modalTitle"> {{ title }} </h1>
+                <button id="shoppingcartButton" @click="Shoppingcart()"> Shopping Cart </button>
+                <button id="addToCart" @click="addItems()"> Add To Cart</button>
+                <div id="summary"> {{ overview }} </div>
+                <br>
+                <img :src="poster" id="ModalImage" />
+                <p> Release Date: {{ releasedate }} </p>
+                <p> Runtime: {{ runtime }}</p>
+            </div>
+
+        </div>
     </div>
-
-</div>
-</div>
 
 </template>
 
@@ -34,12 +34,9 @@ import { indexStore } from "../store/index.js";
 import { ref, vModelRadio } from "vue";
 import router from '../router';
 import axios from "axios";
-import { advancePositionWithMutation } from '@vue/compiler-core';
 
 const index = indexStore()
-let idOptions = ref([])
-
-let Options = ref([])
+const { movies } = storeToRefs(index)
 
 let title = ref("")
 let releasedate = ref("")
@@ -55,64 +52,64 @@ function Shoppingcart() {
     router.push("./Shoppingcart");
 }
 
-let movies = axios.get(`https://api.themoviedb.org/3/trending/all/day?`, {
+let searchMovies = axios.get(`https://api.themoviedb.org/3/discover/movie?`, {
     params: {
         api_key: "e06cb446302dcf3a3cb1358720141aad",
         append_to_response: "videos",
     },
 })
 
-.then((movies) => {
-    for(let i = 0; i < movies.data.results.length; i++) {
-        Options.value.push({
-            text: movies.data.results[i].original_title,
-            id: movies.data.results[i].id,
-            posterimage: "https://image.tmdb.org/t/p/w500" + movies.data.results[i].poster_path
-        });
-    } console.log(movies.data.results)
-})
+    .then((searchMovies) => {
+        for (let i = 0; i < searchMovies.data.results.length; i++) {
+            index.displayMovies({
+                text: searchMovies.data.results[i].original_title,
+                id: searchMovies.data.results[i].id,
+                posterimage: "https://image.tmdb.org/t/p/w500" + searchMovies.data.results[i].poster_path
+            });
+        }
+    })
 
-
+let Options = movies.value
 
 function testFunction(id) {
     myModal.style.display = "block"
 
     let movies = axios.get(`https://api.themoviedb.org/3/movie/${id}`, {
-    params: {
-        api_key: "e06cb446302dcf3a3cb1358720141aad",
-        append_to_response: "videos",
-    },
-})
+        params: {
+            api_key: "e06cb446302dcf3a3cb1358720141aad",
+            append_to_response: "videos",
+        },
+    })
 
-    .then((movies) => {
+        .then((movies) => {
 
-        title.value = movies.data.original_title
-        overview.value = movies.data.overview
-        poster.value = "https://image.tmdb.org/t/p/w500" + movies.data.poster_path
-        releasedate.value = movies.data.release_date
-        runtime.value = movies.data.runtime
+            title.value = movies.data.original_title
+            overview.value = movies.data.overview
+            poster.value = "https://image.tmdb.org/t/p/w500" + movies.data.poster_path
+            releasedate.value = movies.data.release_date
+            runtime.value = movies.data.runtime
 
-        
-        
- });
+
+
+        });
 }
 
 // .then((movies) => {
 //     Modaltitle.value = movies.data.original_title
 //     console.log(movies.data)
-    
+
 // })
 
 
 
 function close() {
-    myModal.style.display ="none"
+    myModal.style.display = "none"
 }
 
-window.onclick = function(event) {
-  if (event.target == myModal) {
-    myModal.style.display = "none";
-  }
+window.onclick = function (event) {
+    if (event.target == myModal) {
+        myModal.style.display = "none";
+    }
 }
 
 </script>
@@ -120,8 +117,7 @@ window.onclick = function(event) {
 
 
 <style>
-
-.objects{
+.objects {
     display: grid;
     align-self: center;
     grid-template-columns: 15vw 15vw 15vw 15vw 15vw;
@@ -140,36 +136,38 @@ window.onclick = function(event) {
 }
 
 .modal {
-  display: none; 
-  position: fixed; 
-  left: 0;
-  top: 0;
-  width: 100%; 
-  height: 100%;
-  
-  background-color: rgb(0,0,0); 
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
 }
 
-#modalContent{
-  opacity: 100%;
-  position: absolute;
-  left: 8.75vw;
-  top: 6.5vw;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80vw; /* Could be more or less, depending on screen size */
-  height: 40vw;
+#modalContent {
+    opacity: 100%;
+    position: absolute;
+    left: 8.75vw;
+    top: 6.5vw;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80vw;
+    /* Could be more or less, depending on screen size */
+    height: 40vw;
 }
 
 .close:hover,
 .close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-#modalTitle{
+#modalTitle {
     color: white;
 }
 
@@ -196,5 +194,4 @@ p {
 #summary {
     font-size: 1.25vw;
 }
-
 </style>

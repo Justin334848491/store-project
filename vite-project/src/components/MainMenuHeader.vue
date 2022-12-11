@@ -4,14 +4,9 @@
     </template>
 <script setup>
 
-import { storeToRefs } from 'pinia';
-import { indexStore } from "../store/index.js";
-import { ref } from 'vue';
+
 import router from '../router';
 
-    const index = indexStore()
-
-   
     function login() {
         router.push("./playerStats")
 
