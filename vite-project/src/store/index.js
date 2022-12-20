@@ -7,14 +7,24 @@ export const indexStore = defineStore("main", {
     movies: [],
     startup: 0,
     testcount: 0,
+    isMovie: false,
   }),
   actions: {
+    addItems(id) {
+      this.shoppingcart.push(id);
+    },
     displayMovies(text, id, posterimage) {
       this.movies.push({
         text,
         id,
         posterimage,
       });
+    },
+    finishedMovie() {
+      this.isMovie = true;
+    },
+    removeMovieItem(arraySlot) {
+      this.movieItems.splice(arraySlot, 1)
     },
   },
 });

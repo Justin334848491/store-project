@@ -37,12 +37,17 @@ import axios from "axios";
 
 const index = indexStore()
 const { movies } = storeToRefs(index)
+const { isMovie } = storeToRefs(index)
 
+let checkMovieFlag = ref(isMovie.value);
+let movieID = ref();
 let title = ref("")
 let releasedate = ref("")
 let poster = ref("")
 let runtime = ref("")
 let overview = ref("")
+
+index.finishedMovie()
 
 function Return3() {
     router.push("/");
@@ -50,6 +55,13 @@ function Return3() {
 
 function Shoppingcart() {
     router.push("./Shoppingcart");
+}
+
+function addItems() {
+    index.addItems({
+        title: title.value,
+        poster: poster.value
+    });
 }
 
 let searchMovies = axios.get(`https://api.themoviedb.org/3/discover/movie?`, {
@@ -60,6 +72,9 @@ let searchMovies = axios.get(`https://api.themoviedb.org/3/discover/movie?`, {
 })
 
     .then((searchMovies) => {
+        if (checkMovieFlag.value === true)
+            return;
+
         for (let i = 0; i < searchMovies.data.results.length; i++) {
             index.displayMovies({
                 text: searchMovies.data.results[i].original_title,
@@ -89,18 +104,10 @@ function testFunction(id) {
             releasedate.value = movies.data.release_date
             runtime.value = movies.data.runtime
 
-
+            movieID.value = id;
 
         });
 }
-
-// .then((movies) => {
-//     Modaltitle.value = movies.data.original_title
-//     console.log(movies.data)
-
-// })
-
-
 
 function close() {
     myModal.style.display = "none"
